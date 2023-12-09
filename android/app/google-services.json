@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "288253242585",
+    "project_id": "yozrkha-cos",
+    "storage_bucket": "yozrkha-cos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288253242585:android:88086d3a9fa5a15be562c8",
+        "android_client_info": {
+          "package_name": "com.example.yorzkha_cos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8CXw5qHQ-i5_1Jf5K4We3DSfheqfuF3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

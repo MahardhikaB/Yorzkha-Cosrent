@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yorzkha_cos/auth/login_or_register.dart';
+import 'package:yorzkha_cos/auth/auth.dart';
 import 'package:yorzkha_cos/theme/light_mode.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginOrRegister(),
+      home: const AuthPage(),
       theme: LightMode,
     );
   }

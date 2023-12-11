@@ -20,6 +20,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPwController = TextEditingController();
 
+// Pressed Button
+  bool isButtonPressed = false;
+
   // Register Function
   void registerUser() async {
     // show loading circle
@@ -38,9 +41,14 @@ class _RegisterPageState extends State<RegisterPage> {
       // show error message
       displayErrorMessage("Passwords do not match", context);
     }
+    // set button to not pressed
+    if (context.mounted) {
+      setState(() {
+        isButtonPressed = false;
+    });
 
     // if password and confirm password match
-    else {
+    } else {
     // Try to register user
     try {
       // create user
@@ -55,9 +63,14 @@ class _RegisterPageState extends State<RegisterPage> {
       } on FirebaseAuthException catch (e) {
         // pop loading circle
         Navigator.pop(context);
-
         // display error message
         displayErrorMessage(e.code, context);
+        // set button to not pressed
+        if (context.mounted) {
+          setState(() {
+            isButtonPressed = false;
+        });
+        }
       }
     }
   }
@@ -73,6 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(height: 70),
                 // Logo
                 Icon(
                   Icons.person,
@@ -84,7 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
       
                 // App Name
                 const Text(
-                  'Yorzkha Cos',
+                  'Y O R Z K H A   C O S R E N T',
                   style: TextStyle(fontSize: 20),
                 ),
       
@@ -123,9 +137,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 25),
       
                 // register Button
-                MyButton(
-                  text: "Register",
-                  onTap: registerUser,
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  padding: EdgeInsets.all(isButtonPressed ? 16.0 : 8.0),
+                  child: MyButton(
+                    text: "Register",
+                    onTap: () {
+                      // set button to pressed
+                      setState(() {
+                        isButtonPressed = true;
+                      });
+                      // perform register
+                      registerUser();
+                    },
+                  ),
                 ),
       
                 const SizedBox(height: 25),

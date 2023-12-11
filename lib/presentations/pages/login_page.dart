@@ -19,6 +19,9 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  // Pressed Button
+  bool isButtonPressed = false;
+
   // Login Function
   void login() async {
     // show loading circle
@@ -39,11 +42,23 @@ class _LoginPageState extends State<LoginPage> {
       if (context.mounted) {
         Navigator.pop(context);
       }
+      // set button to not pressed
+      if (context.mounted) {
+        setState(() {
+          isButtonPressed = false;
+        });
+      }
     // display error message
     } on FirebaseAuthException catch (e) {
       // pop loading circle
       Navigator.pop(context);
       displayErrorMessage(e.code, context);
+      // set button to not pressed
+      if (context.mounted) {
+        setState(() {
+          isButtonPressed = false;
+        });
+      }
     }
   }
 
@@ -58,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const SizedBox(height: 70),
                 // Logo
                 Icon(
                   Icons.person,
@@ -69,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
       
                 // App Name
                 const Text(
-                  'Yorzkha Cos',
+                  'Y O R Z K H A   C O S R E N T',
                   style: TextStyle(fontSize: 20),
                 ),
       
@@ -118,9 +134,20 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 25),
       
                 // Sign In Button
-                MyButton(
-                  text: "Login", 
-                  onTap: login,
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  padding: EdgeInsets.all(isButtonPressed ? 16.0 : 8.0),
+                  child: MyButton(
+                    text: "Login",
+                    onTap: () {
+                      // set button to pressed
+                      setState(() {
+                        isButtonPressed = true;
+                      });
+                      // perform login
+                      login();
+                    },
+                  ),
                 ),
       
                 const SizedBox(height: 25),

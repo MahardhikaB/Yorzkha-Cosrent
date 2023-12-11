@@ -20,23 +20,40 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Yorzkha Cos'),
-        backgroundColor: Colors.blueGrey[700],
+        title: Center(
+          child: Row(
+            children: [
+              const SizedBox(width: 48),
+              Text(
+                'Y O R Z K H A   C O S R E N T',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.background,
         actions: [
           // Logout button
           IconButton(
             onPressed: logout,
             icon: const Icon(Icons.logout),
+            color: Colors.red,
           )
         ],
+        elevation: 0,
       ),
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
             child: Column(
               children: [
                 const Text(
-                  'Daftar Kostum',
+                  'DAFTAR KOSTUM',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Flexible(

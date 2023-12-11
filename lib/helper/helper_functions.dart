@@ -9,3 +9,13 @@ void displayErrorMessage(String message, BuildContext context) {
     )
   );
 }
+
+// display success message
+void displaySuccessMessage(String message, BuildContext context) {
+  showDialog(
+    context: context, 
+    builder: (context) => AlertDialog(
+      title: Text(message),
+    )
+  );
+}

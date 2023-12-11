@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/components/button.dart';
 import 'package:yorzkha_cos/components/textfield.dart';
 import 'package:yorzkha_cos/helper/helper_functions.dart';
+import 'package:yorzkha_cos/presentations/pages/forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
   final void Function()? onTap;
@@ -76,26 +77,39 @@ class _LoginPageState extends State<LoginPage> {
       
                 // Email TextField
                 MyTextField(
-                    hintText: "Email",
-                    obscureText: false,
-                    controller: emailController),
+                  hintText: "Email",
+                  obscureText: false,
+                  controller: emailController
+                ),
       
                 const SizedBox(height: 10),
       
                 // Password TextField
                 MyTextField(
-                    hintText: "Password",
-                    obscureText: true,
-                    controller: passwordController),
+                  hintText: "Password",
+                  obscureText: true,
+                  controller: passwordController
+                ),
       
                 // Forgot Password
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      "Forgot Password?",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.secondary,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context, 
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ForgotPwPage();
+                            }
+                          )
+                        );
+                      },
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
                       ),
                     ),
                   ],
@@ -127,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         "Register Here",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context).colorScheme.inversePrimary,
                         ),
                       ),
                     ),

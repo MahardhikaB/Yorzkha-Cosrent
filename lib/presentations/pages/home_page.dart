@@ -4,13 +4,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/components/card.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
+import 'package:yorzkha_cos/presentations/pages/add_costum_page.dart';
 
-class HomePage extends StatelessWidget {
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   // logout function
   void logout() async {
     FirebaseAuth.instance.signOut();
+  }
+
+  // Navigate to AddCostumPage
+  void navigateToAddCostumPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddCostumPage())
+    );
   }
 
   @override
@@ -48,49 +64,76 @@ class HomePage extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Column(
-              children: [
-                const Text(
-                  'DAFTAR KOSTUM',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Flexible(
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                    child: DottedBorder(
-                      borderType: BorderType.RRect,
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      dashPattern: const [16, 4],
-                      radius: const Radius.circular(8),
-                      child: StreamBuilder(
-                        stream: costumCollection.snapshots(),
-                        builder: (context, snapshot) {
-                          if (!snapshot.hasData) {
-                            return const Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          } else {
-                            return ListView.builder(
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                final costum = Costum.fromSnapshot(snapshot.data!.docs[index]);
-                                return MyCard(costum: costum);
-                              },
-                            );
-                          }
-                        },
-                      ),
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Column(
+            children: [
+              const Text(
+                'DAFTAR KOSTUM',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              Flexible(
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(16),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  child: DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    dashPattern: const [16, 4],
+                    radius: const Radius.circular(8),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: StreamBuilder(
+                            stream: costumCollection.snapshots(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    final costum = Costum.fromSnapshot(
+                                        snapshot.data!.docs[index]);
+                                    return MyCard(costum: costum);
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        // Add button
+                        Positioned(
+                          // Mengatur posisi tombol add berada ditengah dibawah list dan berubah posisi saat list ditambahkan
+                          bottom: 10,
+                          left: 16,
+                          right: 16,
+                          child: FloatingActionButton(
+                            onPressed: () {
+                              navigateToAddCostumPage();
+                            },
+                            child: const Icon(Icons.add),
+                            backgroundColor: Theme.of(context).colorScheme.secondary,
+                            // mengubah bentuk tombol menjadi persegi dan berikan padding sebesar 16
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            elevation: 0,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

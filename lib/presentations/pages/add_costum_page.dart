@@ -13,19 +13,48 @@ class _AddCostumPageState extends State<AddCostumPage> {
   final TextEditingController ukuranController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
   final TextEditingController availabilityController = TextEditingController();
+  String availability = 'Tersedia'; // Default value
+  final List<String> availabilityOptions = ['Tersedia', 'Tidak Tersedia'];
 
   // Fungsi untuk menambahkan data kostum ke Firebase
   Future<void> create() async {
+    // show loading circle
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
     try {
+      // Konversi harga menjadi integer
+      final int harga = int.tryParse(hargaController.text) ?? 0;
+
+      // Konversi availability menjadi boolean
+      final bool isAvailable = availability == 'Tersedia' ? true : false;
+
       await FirebaseFirestore.instance.collection('Costum').add({
-        'name': namaController.text,
-        'size': ukuranController.text,
-        'price': hargaController.text,
-        'isAvailable': availabilityController.text,
+        'NamaKostum': namaController.text,
+        'Ukuran': ukuranController.text,
+        'Harga': harga,
+        'isAvailable': isAvailable,
       });
 
-      // Tambahkan logika setelah berhasil menambahkan data ke Firebase
-      // Misalnya, kembali ke halaman sebelumnya atau tampilkan pesan sukses.
+      // pop loading circle
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+
+      // Tampilkan pesan sukses
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Costum added successfully'),
+        ),
+      );
+
+      // Kembali ke halaman sebelumnya
+      Navigator.pop(context);
+
+
     } catch (e) {
       // Handle error saat gagal menambahkan data ke Firebase
       print('Error creating costum: $e');
@@ -54,12 +83,23 @@ class _AddCostumPageState extends State<AddCostumPage> {
             const SizedBox(height: 16),
             TextFormField(
               controller: hargaController,
+              keyboardType: TextInputType.number, // Keyboard untuk angka
               decoration: const InputDecoration(labelText: 'Price'),
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              controller: availabilityController,
-              decoration: const InputDecoration(labelText: 'Availability'),
+            DropdownButton<String>(
+              value: availability,
+              onChanged: (String? newValue) {
+                setState(() {
+                  availability = newValue!;
+                });
+              },
+              items: availabilityOptions.map((String option) {
+                return DropdownMenuItem<String>(
+                  value: option,
+                  child: Text(option),
+                );
+              }).toList(),
             ),
             const SizedBox(height: 16),
             ElevatedButton(

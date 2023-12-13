@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:yorzkha_cos/components/card.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/presentations/pages/add_costum_page.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   // logout function
   void logout() async {
     FirebaseAuth.instance.signOut();
@@ -24,16 +23,13 @@ class _HomePageState extends State<HomePage> {
   // Navigate to AddCostumPage
   void navigateToAddCostumPage() {
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddCostumPage())
-    );
+        context, MaterialPageRoute(builder: (context) => AddCostumPage()));
   }
 
   @override
   Widget build(BuildContext context) {
     // Take collection from firestore
-    final costumCollection = FirebaseFirestore.instance.collection('Costum');
-
+    final costumCollection = FirebaseFirestore.instance.collection('Costum').orderBy('NamaKostum');
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -76,16 +72,16 @@ class _HomePageState extends State<HomePage> {
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
-                  child: DottedBorder(
-                    borderType: BorderType.RRect,
-                    color: Theme.of(context).colorScheme.inversePrimary,
-                    dashPattern: const [16, 4],
-                    radius: const Radius.circular(8),
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
+                  decoration:BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  child: Stack(
+                    children: [
+                      // First Dotted Border
+                      DottedBorder(
+                        borderType: BorderType.RRect,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        dashPattern: const [16, 4],
+                        radius: const Radius.circular(8),
+                        child: Positioned.fill(
                           child: StreamBuilder(
                             stream: costumCollection.snapshots(),
                             builder: (context, snapshot) {
@@ -98,34 +94,83 @@ class _HomePageState extends State<HomePage> {
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
                                     final costum = Costum.fromSnapshot(
-                                        snapshot.data!.docs[index]);
-                                    return MyCard(costum: costum);
+                                      snapshot.data!.docs[index]
+                                    );
+                                    return Slidable(
+                                      startActionPane: ActionPane(
+                                        motion: Padding(
+                                          padding: EdgeInsets.all(16.0),
+                                          child: StretchMotion(),
+                                        ), 
+                                        children: [
+                                          // Edit button
+                                          SlidableAction(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8),
+                                              bottomLeft: Radius.circular(8),
+                                            ),
+                                            onPressed: null,
+                                            backgroundColor: Colors.blue,
+                                            icon: Icons.edit,
+                                          ),
+                                          // Delete button
+                                          SlidableAction(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(8),
+                                              bottomRight: Radius.circular(8),
+                                            ),
+                                            onPressed: (context) {
+                                              Costum.deleteCostum(costum.id);
+                                            },
+                                            backgroundColor: Colors.red,
+                                            icon: Icons.delete,
+                                          ),
+                                        ],
+                                      ),
+                                      child: MyCard(costum: costum),
+                                    );
                                   },
                                 );
                               }
                             },
                           ),
                         ),
-                        // Add button
-                        Positioned(
-                          // Mengatur posisi tombol add berada ditengah dibawah list dan berubah posisi saat list ditambahkan
-                          bottom: 10,
-                          left: 16,
-                          right: 16,
-                          child: FloatingActionButton(
-                            onPressed: () {
-                              navigateToAddCostumPage();
-                            },
-                            child: const Icon(Icons.add),
-                            backgroundColor: Theme.of(context).colorScheme.secondary,
-                            // mengubah bentuk tombol menjadi persegi dan berikan padding sebesar 16
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            elevation: 0,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              // Second Dotted Border
+              Container(
+                margin: const EdgeInsets.only(left: 16, right: 16),
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  dashPattern: const [16, 4],
+                  radius: const Radius.circular(8),
+                  child: Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(5),
+                    child: Material(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Theme.of(context).colorScheme.secondary,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        splashFactory: InkRipple.splashFactory,
+                        splashColor: Theme.of(context).colorScheme.inversePrimary,
+                        onTap: () {
+                          navigateToAddCostumPage();
+                        },
+                        child: FloatingActionButton(
+                          onPressed: null,
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8)
                           ),
+                          elevation: 0,
+                          child: const Icon(Icons.add),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

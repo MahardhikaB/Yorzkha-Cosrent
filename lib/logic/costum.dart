@@ -34,4 +34,19 @@ class Costum {
       isAvailable: snapshot.get('isAvailable') as bool,
     );
   }
+
+  // delete function
+  static Future<void> deleteCostum(String documentId) async {
+    try {
+      // delete data from firebase using the documentId
+      await FirebaseFirestore.instance.collection('Costum').doc(documentId).delete();
+
+      // display success message
+      print('Costum deleted successfully');
+      
+    } catch (e) {
+      // Handle error saat gagal menghapus data dari Firebase
+      print('Error deleting costum: $e');
+    }
+  }
 }

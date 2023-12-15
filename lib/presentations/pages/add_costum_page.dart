@@ -79,7 +79,8 @@ class _AddCostumPageState extends State<AddCostumPage> {
                 onPressed: () {
                   pickImage(ImageSource.gallery);
                 }, 
-                  child: const Text('Pick Image'),),
+                  child: const Text('Pick Image'),
+              ),
               TextFormField(
                 controller: namaController,
                 decoration: const InputDecoration(labelText: 'Name'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Costum {
   String id;
@@ -127,17 +128,21 @@ class Costum {
   }
 
   // delete function
-  static Future<void> deleteCostum(String documentId, BuildContext context) async {
-    try {
-      // delete data from firebase using the documentId
-      await FirebaseFirestore.instance.collection('Costum').doc(documentId).delete();
+static Future<void> deleteCostum(String documentId, String imageUrl, BuildContext context) async {
+  try {
+    // Delete data from firebase using the documentId
+    await FirebaseFirestore.instance.collection('Costum').doc(documentId).delete();
 
-      // display success message
-      print('Costum deleted successfully');
-      
-    } catch (e) {
-      // Handle error saat gagal menghapus data dari Firebase
-      print('Error deleting costum: $e');
+    // Delete image from Firebase Storage
+    if (imageUrl.isNotEmpty) {
+      await FirebaseStorage.instance.refFromURL(imageUrl).delete();
     }
+
+    // Display success message
+    print('Costum deleted successfully');
+  } catch (e) {
+    // Handle error saat gagal menghapus data dari Firebase
+    print('Error deleting costum: $e');
   }
+}
 }

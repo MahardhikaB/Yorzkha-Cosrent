@@ -154,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                                                       onPressed: () {
                                                         // Hapus kostum jika dikonfirmasi
                                                         Costum.deleteCostum(
-                                                            costum.id, context);
+                                                            costum.id, costum.imageUrl, context);
                                                         Navigator.pop(
                                                             context); // Tutup dialog
                                                       },

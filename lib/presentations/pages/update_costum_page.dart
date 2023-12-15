@@ -72,6 +72,7 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
                   ukuranController.text,
                   int.tryParse(hargaController.text) ?? 0,
                   availability == 'Tersedia' ? true : false,
+                  widget.costum.imageUrl,
                   context,
                 );
               },

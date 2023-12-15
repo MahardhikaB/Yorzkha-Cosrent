@@ -39,25 +39,25 @@ class MyCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // Image.asset('assets/ebike-polinema.png'),
-              // Container(
-              //   width: 1,
-              //   margin: const EdgeInsets.symmetric(vertical: 16),
-              //   height: double.infinity,
-              //   color: Theme.of(context).colorScheme.inversePrimary,
-              // ),
+              Image.network(costum.imageUrl, width: 80, height: 80),
+              Container(
+                width: 1,
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                height: double.infinity,
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     costum.namaKostum, 
-                    style: TextStyle(fontWeight: FontWeight.bold)
+                    style: const TextStyle(fontWeight: FontWeight.bold)
                   ),
                   const SizedBox(height: 8),
-                  Text('Ukuran: ' + costum.ukuran),
+                  Text('Ukuran: ${costum.ukuran}'),
                   const SizedBox(height: 8),
-                  Text('Harga: ' + costum.harga.toString()),
+                  Text('Harga: ${costum.harga}'),
                   const SizedBox(height: 6),
                   Row(
                     children: [

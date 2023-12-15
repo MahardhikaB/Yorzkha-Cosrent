@@ -7,6 +7,7 @@ class Costum {
   String namaKostum;
   String ukuran;
   bool isAvailable;
+  String imageUrl;
 
   Costum({
     required this.id, 
@@ -14,14 +15,16 @@ class Costum {
     required this.namaKostum, 
     required this.ukuran,
     required this.isAvailable,
+    required this.imageUrl,
     });
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['NamaKostum'] = this.namaKostum;
-    data['Ukuran'] = this.ukuran;
-    data['Harga'] = this.harga;
-    data['isAvailable'] = this.isAvailable;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['NamaKostum'] = namaKostum;
+    data['Ukuran'] = ukuran;
+    data['Harga'] = harga;
+    data['isAvailable'] = isAvailable;
+    data['imageUrl'] = imageUrl;
     return data;
   }
 
@@ -32,11 +35,12 @@ class Costum {
       ukuran: snapshot.get('Ukuran') as String,
       harga: snapshot.get('Harga') as int,
       isAvailable: snapshot.get('isAvailable') as bool,
+      imageUrl: snapshot.get('imageUrl') as String,
     );
   }
 
   // create function
-  static Future<void> create(TextEditingController namaController, TextEditingController ukuranController, TextEditingController hargaController, String availability, BuildContext context) async {
+  static Future<void> create(TextEditingController namaController, TextEditingController ukuranController, TextEditingController hargaController, String availability, String imageUrl, BuildContext context) async {
     // show loading circle
     showDialog(
       context: context,
@@ -56,6 +60,7 @@ class Costum {
         'Ukuran': ukuranController.text,
         'Harga': harga,
         'isAvailable': isAvailable,
+        'imageUrl': imageUrl,
       });
 
       // pop loading circle
@@ -81,7 +86,7 @@ class Costum {
   }
 
   // update function
-  static Future<void> update(String documentId, String namaKostum, String ukuran, int harga, bool isAvailable, BuildContext context) async {
+  static Future<void> update(String documentId, String namaKostum, String ukuran, int harga, bool isAvailable, String imageUrl, BuildContext context) async {
     // show loading circle
     showDialog(
       context: context,
@@ -96,6 +101,7 @@ class Costum {
         'Ukuran': ukuran,
         'Harga': harga,
         'isAvailable': isAvailable,
+        'imageUrl': imageUrl,
       });
 
       // pop loading circle

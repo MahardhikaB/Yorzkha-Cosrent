@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
   // Navigate to AddCostumPage
   void navigateToAddCostumPage() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => AddCostumPage()));
+        context, MaterialPageRoute(builder: (context) => const AddCostumPage()));
   }
 
   @override
@@ -102,14 +102,14 @@ class _HomePageState extends State<HomePage> {
                                         snapshot.data!.docs[index]);
                                     return Slidable(
                                       startActionPane: ActionPane(
-                                        motion: Padding(
+                                        motion: const Padding(
                                           padding: EdgeInsets.all(16.0),
                                           child: StretchMotion(),
                                         ),
                                         children: [
                                           // Edit button
                                           SlidableAction(
-                                            borderRadius: BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                               topLeft: Radius.circular(8),
                                               bottomLeft: Radius.circular(8),
                                             ),
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           // Delete button
                                           SlidableAction(
-                                            borderRadius: BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                               topRight: Radius.circular(8),
                                               bottomRight: Radius.circular(8),
                                             ),
@@ -139,8 +139,8 @@ class _HomePageState extends State<HomePage> {
                                                 context: context,
                                                 builder: (context) =>
                                                     AlertDialog(
-                                                  title: Text('Konfirmasi'),
-                                                  content: Text(
+                                                  title: const Text('Konfirmasi'),
+                                                  content: const Text(
                                                       'Apakah Anda yakin ingin menghapus kostum ini?'),
                                                   actions: [
                                                     TextButton(
@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> {
                                                         Navigator.pop(
                                                             context); // Tutup dialog
                                                       },
-                                                      child: Text('Batal'),
+                                                      child: const Text('Batal'),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                                                         Navigator.pop(
                                                             context); // Tutup dialog
                                                       },
-                                                      child: Text('Hapus'),
+                                                      child: const Text('Hapus'),
                                                     ),
                                                   ],
                                                 ),

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
+import 'package:yorzkha_cos/presentations/pages/deskripsi_page.dart';
 
 class MyCard extends StatelessWidget {
   final Costum costum;
@@ -14,7 +15,6 @@ class MyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      clipBehavior: Clip.hardEdge,
       height: 120,
       margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
@@ -25,9 +25,17 @@ class MyCard extends StatelessWidget {
         ),
       ),
       child: Material(
+        clipBehavior: Clip.hardEdge,
         color: Colors.transparent,
         child: InkWell(
-          onTap: () async {},
+          onTap: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DeskripsiPage(costum: costum),
+              ),
+            );
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

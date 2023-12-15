@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 
-class AddCostumPage extends StatefulWidget {
-  const AddCostumPage({Key? key});
+class UpdateCostumPage extends StatefulWidget {
+  final Costum costum;
+  const UpdateCostumPage({Key? key, required this.costum});
 
   @override
-  _AddCostumPageState createState() => _AddCostumPageState();
+  _UpdateCostumPageState createState() => _UpdateCostumPageState();
 }
 
-class _AddCostumPageState extends State<AddCostumPage> {
+class _UpdateCostumPageState extends State<UpdateCostumPage> {
   final TextEditingController namaController = TextEditingController();
   final TextEditingController ukuranController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
@@ -16,9 +17,14 @@ class _AddCostumPageState extends State<AddCostumPage> {
   String availability = 'Tersedia'; // Default value
   final List<String> availabilityOptions = ['Tersedia', 'Tidak Tersedia'];
 
+  
 
   @override
   Widget build(BuildContext context) {
+    namaController.text = widget.costum.namaKostum;
+    ukuranController.text = widget.costum.ukuran;
+    hargaController.text = widget.costum.harga.toString();
+    availability = widget.costum.isAvailable ? 'Tersedia' : 'Tidak Tersedia';
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add Costum'),
@@ -60,11 +66,12 @@ class _AddCostumPageState extends State<AddCostumPage> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Costum.create(
-                  namaController,
-                  ukuranController,
-                  hargaController,
-                  availability,
+                Costum.update(
+                  widget.costum.id,
+                  namaController.text,
+                  ukuranController.text,
+                  int.tryParse(hargaController.text) ?? 0,
+                  availability == 'Tersedia' ? true : false,
                   context,
                 );
               },

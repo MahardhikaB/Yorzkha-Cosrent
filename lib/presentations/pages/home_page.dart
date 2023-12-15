@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:yorzkha_cos/components/card.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/presentations/pages/add_costum_page.dart';
+import 'package:yorzkha_cos/presentations/pages/update_costum_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,7 +30,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // Take collection from firestore
-    final costumCollection = FirebaseFirestore.instance.collection('Costum').orderBy('NamaKostum');
+    final costumCollection =
+        FirebaseFirestore.instance.collection('Costum').orderBy('NamaKostum');
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -71,15 +73,18 @@ class _HomePageState extends State<HomePage> {
               Flexible(
                 child: Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(16),
-                  decoration:BoxDecoration(borderRadius: BorderRadius.circular(8)),
+                  margin: const EdgeInsets.all(16),
+                  clipBehavior: Clip.hardEdge,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(8)),
                   child: Stack(
                     children: [
                       // First Dotted Border
                       DottedBorder(
+                        strokeWidth: 2,
                         borderType: BorderType.RRect,
+                        dashPattern: const [20, 6],
                         color: Theme.of(context).colorScheme.inversePrimary,
-                        dashPattern: const [16, 4],
                         radius: const Radius.circular(8),
                         child: Positioned.fill(
                           child: StreamBuilder(
@@ -94,14 +99,13 @@ class _HomePageState extends State<HomePage> {
                                   itemCount: snapshot.data!.docs.length,
                                   itemBuilder: (context, index) {
                                     final costum = Costum.fromSnapshot(
-                                      snapshot.data!.docs[index]
-                                    );
+                                        snapshot.data!.docs[index]);
                                     return Slidable(
                                       startActionPane: ActionPane(
                                         motion: Padding(
                                           padding: EdgeInsets.all(16.0),
                                           child: StretchMotion(),
-                                        ), 
+                                        ),
                                         children: [
                                           // Edit button
                                           SlidableAction(
@@ -109,7 +113,17 @@ class _HomePageState extends State<HomePage> {
                                               topLeft: Radius.circular(8),
                                               bottomLeft: Radius.circular(8),
                                             ),
-                                            onPressed: null,
+                                            onPressed: (context) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UpdateCostumPage(
+                                                    costum: costum,
+                                                  ),
+                                                ),
+                                              );
+                                            },
                                             backgroundColor: Colors.blue,
                                             icon: Icons.edit,
                                           ),
@@ -120,7 +134,35 @@ class _HomePageState extends State<HomePage> {
                                               bottomRight: Radius.circular(8),
                                             ),
                                             onPressed: (context) {
-                                              Costum.deleteCostum(costum.id);
+                                              // Menampilkan dialog konfirmasi sebelum menghapus
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                  title: Text('Konfirmasi'),
+                                                  content: Text(
+                                                      'Apakah Anda yakin ingin menghapus kostum ini?'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            context); // Tutup dialog
+                                                      },
+                                                      child: Text('Batal'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        // Hapus kostum jika dikonfirmasi
+                                                        Costum.deleteCostum(
+                                                            costum.id, context);
+                                                        Navigator.pop(
+                                                            context); // Tutup dialog
+                                                      },
+                                                      child: Text('Hapus'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
                                             },
                                             backgroundColor: Colors.red,
                                             icon: Icons.delete,
@@ -157,7 +199,8 @@ class _HomePageState extends State<HomePage> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(8),
                         splashFactory: InkRipple.splashFactory,
-                        splashColor: Theme.of(context).colorScheme.inversePrimary,
+                        splashColor:
+                            Theme.of(context).colorScheme.inversePrimary,
                         onTap: () {
                           navigateToAddCostumPage();
                         },
@@ -165,8 +208,7 @@ class _HomePageState extends State<HomePage> {
                           onPressed: null,
                           backgroundColor: Colors.transparent,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)
-                          ),
+                              borderRadius: BorderRadius.circular(8)),
                           elevation: 0,
                           child: const Icon(Icons.add),
                         ),

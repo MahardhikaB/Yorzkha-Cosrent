@@ -18,6 +18,7 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
   final TextEditingController namaController = TextEditingController();
   final TextEditingController ukuranController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
+  TextEditingController deskripsiController = TextEditingController();
   String availability = 'Tersedia'; // Default value
   final List<String> availabilityOptions = ['Tersedia', 'Tidak Tersedia'];
 
@@ -34,6 +35,7 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
     ukuranController.text = widget.costum.ukuran;
     hargaController.text = widget.costum.harga.toString();
     availability = widget.costum.isAvailable ? 'Tersedia' : 'Tidak Tersedia';
+    deskripsiController.text = widget.costum.deskripsi;
   }
 
   Future<void> pickImage(ImageSource imageSource) async {
@@ -132,6 +134,11 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
                 }).toList(),
               ),
               const SizedBox(height: 16),
+              TextFormField(
+                controller: deskripsiController,
+                decoration: const InputDecoration(labelText: 'Description'),
+              ),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () async {
                   // Update costum dengan informasi terbaru
@@ -142,6 +149,7 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
                     int.tryParse(hargaController.text) ?? 0,
                     availability == 'Tersedia',
                     await uploadImage(),
+                    deskripsiController.text,
                     context,
                   );
                 },

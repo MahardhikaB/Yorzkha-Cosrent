@@ -9,6 +9,7 @@ class Costum {
   String ukuran;
   bool isAvailable;
   String imageUrl;
+  String deskripsi;
 
   Costum({
     required this.id, 
@@ -17,6 +18,7 @@ class Costum {
     required this.ukuran,
     required this.isAvailable,
     required this.imageUrl,
+    required this.deskripsi,
     });
 
   Map<String, dynamic> toJson() {
@@ -26,6 +28,7 @@ class Costum {
     data['Harga'] = harga;
     data['isAvailable'] = isAvailable;
     data['imageUrl'] = imageUrl;
+    data['deskripsi'] = deskripsi;
     return data;
   }
 
@@ -37,11 +40,12 @@ class Costum {
       harga: snapshot.get('Harga') as int,
       isAvailable: snapshot.get('isAvailable') as bool,
       imageUrl: snapshot.get('imageUrl') as String,
+      deskripsi: snapshot.get('deskripsi') as String,
     );
   }
 
   // create function
-  static Future<void> create(TextEditingController namaController, TextEditingController ukuranController, TextEditingController hargaController, String availability, String imageUrl, BuildContext context) async {
+  static Future<void> create(TextEditingController namaController, TextEditingController ukuranController, TextEditingController hargaController, String availability, String imageUrl, TextEditingController deskripsi, BuildContext context) async {
     // show loading circle
     showDialog(
       context: context,
@@ -62,6 +66,7 @@ class Costum {
         'Harga': harga,
         'isAvailable': isAvailable,
         'imageUrl': imageUrl,
+        'deskripsi': deskripsi,
       });
 
       // pop loading circle
@@ -87,7 +92,7 @@ class Costum {
   }
 
   // update function
-  static Future<void> update(String documentId, String namaKostum, String ukuran, int harga, bool isAvailable, String imageUrl, BuildContext context) async {
+  static Future<void> update(String documentId, String namaKostum, String ukuran, int harga, bool isAvailable, String imageUrl, String deskripsi, BuildContext context) async {
     // show loading circle
     showDialog(
       context: context,
@@ -103,6 +108,7 @@ class Costum {
         'Harga': harga,
         'isAvailable': isAvailable,
         'imageUrl': imageUrl,
+        'deskripsi': deskripsi,
       });
 
       // pop loading circle

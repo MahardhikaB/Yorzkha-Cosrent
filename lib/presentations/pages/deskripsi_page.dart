@@ -52,20 +52,62 @@ class DeskripsiPage extends StatelessWidget {
                 width: double.infinity,
                 height: double.infinity,
                 child: DottedBorder(
-                            strokeWidth: 1,
-                            borderType: BorderType.RRect,
-                            dashPattern: const [18, 4],
-                            color: Theme.of(context).colorScheme.inversePrimary,
-                            radius: const Radius.circular(8),
+                  strokeWidth: 1,
+                  borderType: BorderType.RRect,
+                  dashPattern: const [18, 4],
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  radius: const Radius.circular(8),
+                  child: Text(
+                    costum.deskripsi,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inversePrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // Second Dotted Border
+            Container(
+              margin: const EdgeInsets.only(left: 16, right: 16),
+              child: DottedBorder(
+                borderType: BorderType.RRect,
+                color: Theme.of(context).colorScheme.inversePrimary,
+                dashPattern: const [16, 4],
+                radius: const Radius.circular(8),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(5),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      splashFactory: InkRipple.splashFactory,
+                      splashColor: Theme.of(context).colorScheme.inversePrimary,
+                      onTap: () {},
+                      child: FloatingActionButton(
+                          onPressed: null,
+                          backgroundColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                          elevation: 0,
+                          child: Center(
                             child: Text(
-                              'Deskripsi',
+                              'Rent',
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.inversePrimary,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
                             ),
-                          ),
+                          )),
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

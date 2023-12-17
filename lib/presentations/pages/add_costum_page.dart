@@ -19,6 +19,7 @@ class _AddCostumPageState extends State<AddCostumPage> {
   final TextEditingController ukuranController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
   final TextEditingController availabilityController = TextEditingController();
+  final TextEditingController deskripsiController = TextEditingController();
   String availability = 'Tersedia'; // Default value
   final List<String> availabilityOptions = ['Tersedia', 'Tidak Tersedia'];
 
@@ -112,6 +113,11 @@ class _AddCostumPageState extends State<AddCostumPage> {
                 }).toList(),
               ),
               const SizedBox(height: 16),
+              TextFormField(
+                controller: deskripsiController,
+                decoration: const InputDecoration(labelText: 'Description'),
+              ),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () async {
                   String url = await uploadImage();
@@ -119,8 +125,9 @@ class _AddCostumPageState extends State<AddCostumPage> {
                     namaController,
                     ukuranController,
                     hargaController,
-                    availability,
+                    availability,                   
                     url,
+                    deskripsiController,
                     context,
                   );
                 },

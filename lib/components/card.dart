@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/presentations/pages/deskripsi_page.dart';
+import 'package:yorzkha_cos/presentations/pages/rented_page.dart';
 
 class MyCard extends StatelessWidget {
   final Costum costum;
@@ -29,12 +30,23 @@ class MyCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           onTap: () async {
-            Navigator.push(
+            // if costum is available, go to rent form page
+            if (costum.isAvailable) {
+              Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => DeskripsiPage(costum: costum),
               ),
             );
+            } else {
+              // if costum is not available, go to rented page
+              Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RentedPage(costum: costum),
+              ),
+            );
+            }
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

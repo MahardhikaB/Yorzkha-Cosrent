@@ -1,17 +1,37 @@
 // page yang berisi deskripsi kostum
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
-import 'package:yorzkha_cos/presentations/pages/rent_form_page.dart';
+import 'package:yorzkha_cos/logic/rent.dart';
 
-class DeskripsiPage extends StatelessWidget {
+class RentedPage extends StatefulWidget {
   final Costum costum;
 
-  const DeskripsiPage({
+  const RentedPage({
     Key? key,
     required this.costum,
   }) : super(key: key);
+
+  @override
+  State<RentedPage> createState() => _RentedPageState();
+}
+
+class _RentedPageState extends State<RentedPage> {
+  Rent? rent = null;
+
+  void getRent() async {
+    rent = await Rent.getLastRentByCostumId(widget.costum.id);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRent();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +57,16 @@ class DeskripsiPage extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              costum.namaKostum,
+              widget.costum.namaKostum,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
-            Text('Ukuran: ${costum.ukuran}'),
+            Text('Ukuran: ${widget.costum.ukuran}'),
             const SizedBox(height: 16),
-            Text('Harga: ${costum.harga}'),
+            Text('Harga: ${widget.costum.harga}'),
             const SizedBox(height: 16),
-            Text('Status: ${costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
+            Text(
+                'Status: ${widget.costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
 
             // Dotted Border
             Flexible(
@@ -58,13 +79,24 @@ class DeskripsiPage extends StatelessWidget {
                   dashPattern: const [18, 4],
                   color: Theme.of(context).colorScheme.inversePrimary,
                   radius: const Radius.circular(8),
-                  child: Text(
-                    costum.deskripsi,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'NIK: ${rent?.nik}',
+                      ),
+                      Text(
+                        'Namaa Peminjam: ${rent?.nama}',
+                      ),
+                      Text(
+                        'Alamat: ${rent?.alamat}',
+                      ),
+                      Text(
+                        'Jenis Kelamin: ${rent?.jenisKelamin}',
+                      ),
+                      Text(
+                        'No Telp: ${rent?.noTelp}',
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -87,13 +119,16 @@ class DeskripsiPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       splashFactory: InkRipple.splashFactory,
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RentFormPage(costum: costum),
-                          ),
-                        );
+                      onTap: () async {
+                        // find costum by costumId then update isAvailable
+                        final costumDoc = await FirebaseFirestore.instance
+                            .collection('Costum')
+                            .doc(widget.costum.id)
+                            .get();
+                        await costumDoc.reference.update({
+                          'isAvailable': true,
+                        });
+                        Navigator.pop(context);
                       },
                       child: FloatingActionButton(
                           onPressed: null,
@@ -103,7 +138,7 @@ class DeskripsiPage extends StatelessWidget {
                           elevation: 0,
                           child: Center(
                             child: Text(
-                              'Rent',
+                              'Returned',
                               style: TextStyle(
                                 color: Theme.of(context)
                                     .colorScheme

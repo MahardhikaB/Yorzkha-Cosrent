@@ -2,6 +2,7 @@
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/presentations/pages/rent_form_page.dart';
 
@@ -15,6 +16,7 @@ class DeskripsiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -43,27 +45,30 @@ class DeskripsiPage extends StatelessWidget {
             const SizedBox(height: 16),
             Text('Ukuran: ${costum.ukuran}'),
             const SizedBox(height: 16),
-            Text('Harga: ${costum.harga}'),
+            Text('Harga: ${currencyFormatter.format(costum.harga)} / 3 Days'),
             const SizedBox(height: 16),
             Text('Status: ${costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
 
             // Dotted Border
             Flexible(
-              child: SizedBox(
-                width: double.infinity,
-                height: double.infinity,
-                child: DottedBorder(
-                  strokeWidth: 1,
-                  borderType: BorderType.RRect,
-                  dashPattern: const [18, 4],
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  radius: const Radius.circular(8),
-                  child: Text(
-                    costum.deskripsi,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+              child: Container(
+                margin: const EdgeInsets.only(right: 8, left: 8, top: 32),
+                child: SizedBox(
+                  height: 800,
+                  width: double.infinity,
+                  child: DottedBorder(
+                    strokeWidth: 1,
+                    borderType: BorderType.RRect,
+                    dashPattern: const [18, 4],
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    radius: const Radius.circular(8),
+                    child: Text(
+                      costum.deskripsi,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ),
@@ -71,7 +76,8 @@ class DeskripsiPage extends StatelessWidget {
             ),
             // Second Dotted Border
             Container(
-              margin: const EdgeInsets.only(left: 16, right: 16),
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 8, right: 8, top: 16),
               child: DottedBorder(
                 borderType: BorderType.RRect,
                 color: Theme.of(context).colorScheme.inversePrimary,
@@ -95,24 +101,19 @@ class DeskripsiPage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: FloatingActionButton(
-                          onPressed: null,
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          elevation: 0,
+                      child: const SizedBox(
+                          height: 50, 
                           child: Center(
                             child: Text(
-                              'Rent',
+                              'R E N T',
                               style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inversePrimary,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
                             ),
-                          )),
+                          ),
+                      ),
                     ),
                   ),
                 ),

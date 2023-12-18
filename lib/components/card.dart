@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/presentations/pages/deskripsi_page.dart';
 import 'package:yorzkha_cos/presentations/pages/rented_page.dart';
+import 'package:intl/intl.dart';
 
 class MyCard extends StatelessWidget {
   final Costum costum;
@@ -14,6 +15,7 @@ class MyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
     return Container(
       width: double.infinity,
       height: 120,
@@ -51,7 +53,7 @@ class MyCard extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Image.network(costum.imageUrl, width: 80, height: 80),
+              Image.network(costum.imageUrl, width: 60, height: 60),
               Container(
                 width: 1,
                 margin: const EdgeInsets.symmetric(vertical: 16),
@@ -69,7 +71,7 @@ class MyCard extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text('Ukuran: ${costum.ukuran}'),
                   const SizedBox(height: 8),
-                  Text('Harga: ${costum.harga}'),
+                  Text('Harga: ${currencyFormatter.format(costum.harga)} / 3 Days'),
                   const SizedBox(height: 6),
                   Row(
                     children: [
@@ -77,9 +79,10 @@ class MyCard extends StatelessWidget {
                       // status
                       const Text('Status: '),
                       Text(costum.isAvailable ? 'Tersedia' : 'Digunakan'),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 6),
                       Icon(
                         Icons.circle,
+                        size: 14,
                         color: costum.isAvailable ? Colors.green : Colors.red,
                       ),
                     ],

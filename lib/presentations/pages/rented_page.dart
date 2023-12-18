@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/logic/rent.dart';
 
@@ -37,6 +38,7 @@ class _RentedPageState extends State<RentedPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -65,47 +67,51 @@ class _RentedPageState extends State<RentedPage> {
             const SizedBox(height: 16),
             Text('Ukuran: ${widget.costum.ukuran}'),
             const SizedBox(height: 16),
-            Text('Harga: ${widget.costum.harga}'),
+            Text('Harga: ${currencyFormatter.format(widget.costum.harga)} / 3 Days'),
             const SizedBox(height: 16),
             Text(
                 'Status: ${widget.costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
 
             // Dotted Border
             Flexible(
-              child: SizedBox(
-                width: double.infinity,
-                height: double.infinity,
-                child: DottedBorder(
-                  strokeWidth: 1,
-                  borderType: BorderType.RRect,
-                  dashPattern: const [18, 4],
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  radius: const Radius.circular(8),
-                  child: Column(
-                    children: [
-                      Text(
-                        'NIK: ${rent?.nik}',
-                      ),
-                      Text(
-                        'Namaa Peminjam: ${rent?.nama}',
-                      ),
-                      Text(
-                        'Alamat: ${rent?.alamat}',
-                      ),
-                      Text(
-                        'Jenis Kelamin: ${rent?.jenisKelamin}',
-                      ),
-                      Text(
-                        'No Telp: ${rent?.noTelp}',
-                      ),
-                    ],
+              child: Container(
+                margin: const EdgeInsets.only(right: 8, left: 8, top: 32),
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 800,
+                  child: DottedBorder(
+                    strokeWidth: 1,
+                    borderType: BorderType.RRect,
+                    dashPattern: const [18, 4],
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    radius: const Radius.circular(8),
+                    child: Column(
+                      children: [
+                        Text(
+                          'NIK: ${rent?.nik}',
+                        ),
+                        Text(
+                          'Namaa Peminjam: ${rent?.nama}',
+                        ),
+                        Text(
+                          'Alamat: ${rent?.alamat}',
+                        ),
+                        Text(
+                          'Jenis Kelamin: ${rent?.jenisKelamin}',
+                        ),
+                        Text(
+                          'No Telp: ${rent?.noTelp}',
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
             // Second Dotted Border
             Container(
-              margin: const EdgeInsets.only(left: 16, right: 16),
+              width: double.infinity,
+              margin: const EdgeInsets.only(left: 8, right: 8, top: 16),
               child: DottedBorder(
                 borderType: BorderType.RRect,
                 color: Theme.of(context).colorScheme.inversePrimary,
@@ -122,6 +128,12 @@ class _RentedPageState extends State<RentedPage> {
                       splashFactory: InkRipple.splashFactory,
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () async {
+                        // snckbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Costum has been returned'),
+                          ),
+                        );
                         // find costum by costumId then update isAvailable
                         final costumDoc = await FirebaseFirestore.instance
                             .collection('Costum')
@@ -132,24 +144,19 @@ class _RentedPageState extends State<RentedPage> {
                         });
                         Navigator.pop(context);
                       },
-                      child: FloatingActionButton(
-                          onPressed: null,
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          elevation: 0,
+                      child: const SizedBox(
+                          height: 50, 
                           child: Center(
                             child: Text(
-                              'Returned',
+                              'R E T U R N',
                               style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inversePrimary,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                               ),
                             ),
-                          )),
+                          ),
+                        ),
                     ),
                   ),
                 ),

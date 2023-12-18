@@ -72,6 +72,7 @@ class _HomePageState extends State<HomePage> {
               ),
               Flexible(
                 child: Container(
+                  height: 800,
                   width: double.infinity,
                   margin: const EdgeInsets.all(16),
                   clipBehavior: Clip.hardEdge,
@@ -191,7 +192,7 @@ class _HomePageState extends State<HomePage> {
               ),
               // Second Dotted Border
               Container(
-                margin: const EdgeInsets.only(left: 16, right: 16),
+                margin: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
                 child: DottedBorder(
                   borderType: BorderType.RRect,
                   color: Theme.of(context).colorScheme.inversePrimary,
@@ -211,10 +212,8 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           navigateToAddCostumPage();
                         },
-                        child: const SizedBox(
-                          height: 50, 
-                          child: Icon(Icons.add)
-                        ),
+                        child:
+                            const SizedBox(height: 50, child: Icon(Icons.add)),
                       ),
                     ),
                   ),

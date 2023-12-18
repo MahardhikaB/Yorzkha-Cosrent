@@ -25,6 +25,23 @@ class _RentFormPageState extends State<RentFormPage> {
   void initState() {
     super.initState();
     namaKostumController.text = widget.costum.namaKostum;
+
+    // Menampilkan snckbar jika membuka halaman ini dari halaman lain
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final snackBar = SnackBar(
+        content: const Text(
+          'Tekan ikon kamera untuk memindai KTP\n Agar mempermudah proses pengisian form',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          )
+        ),
+        duration: const Duration(seconds: 5),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
   }
 
   @override
@@ -56,7 +73,7 @@ class _RentFormPageState extends State<RentFormPage> {
 
             Container(
               width: double.infinity,
-              margin: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(left: 16, right: 16, top: 32),
               child: DottedBorder(
                 strokeWidth: 1,
                 borderType: BorderType.RRect,
@@ -126,14 +143,14 @@ class _RentFormPageState extends State<RentFormPage> {
             Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 16, right: 16),
+                  width: 250,
+                  margin: const EdgeInsets.only(left: 16, right: 16, top: 32),
                   child: DottedBorder(
                     borderType: BorderType.RRect,
                     color: Theme.of(context).colorScheme.inversePrimary,
                     dashPattern: const [16, 4],
                     radius: const Radius.circular(8),
                     child: Container(
-                      width: double.infinity,
                       padding: const EdgeInsets.all(5),
                       child: Material(
                         borderRadius: BorderRadius.circular(8),
@@ -158,32 +175,53 @@ class _RentFormPageState extends State<RentFormPage> {
                             height: 50, 
                             child: Center(
                               child: Text(
-                                'Rent',
+                                'R E N T',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 18,
                                 ),
                               ),
                             ),
                           ),
-                          
                         ),
                       ),
                     ),
                   ),
                 ),
                 // Tombol kamera dengan icon
-                IconButton(
-                  onPressed: () {
-                    // Tambahkan logika untuk menangani ketika tombol kamera ditekan
-                    // misalnya, tampilkan dialog kamera atau navigasi ke halaman kamera
-                    // ...
-
-                  },
-                  icon: const Icon(Icons.camera_alt),
-                  color: Theme.of(context).colorScheme.primary,
-                  iconSize: 30,
+                Container(
+                  width: 62,
+                  margin: const EdgeInsets.only(right: 16, top: 32),
+                  child: DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    dashPattern: const [16, 4],
+                    radius: const Radius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Theme.of(context).colorScheme.secondary,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          splashFactory: InkRipple.splashFactory,
+                          splashColor: Theme.of(context).colorScheme.inversePrimary,
+                          onTap: () {},
+                          child: const SizedBox(
+                            height: 50, 
+                            child: Center(
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: Colors.black,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 
-class MyTextField extends StatelessWidget {
+class MyTextFormField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
-  final TextInputType? keyboardType;
-  final bool readOnly;
+  final String? Function(String?)? validator;
 
-  const MyTextField({
+  const MyTextFormField({
     super.key,
     required this.hintText,
     required this.obscureText,
     required this.controller,
-    required this.keyboardType,
-    this.readOnly = false,
+    required this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -26,9 +24,8 @@ class MyTextField extends StatelessWidget {
         ),
         hintText: hintText,
       ),
-      readOnly: readOnly,
-      keyboardType: keyboardType,
       obscureText: obscureText,
+      validator: validator,
     );
   }
 }

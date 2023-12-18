@@ -19,19 +19,21 @@ class RentedPage extends StatefulWidget {
 }
 
 class _RentedPageState extends State<RentedPage> {
-  Rent? rent = null;
+  Rent? rent;
 
-  void getRent() async {
-    rent = await Rent.getLastRentByCostumId(widget.costum.id);
-  }
-
+  
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
     getRent();
+    super.initState();
+  }
+
+  void getRent() async {
+    rent = await Rent.getLastRentByCostumId(widget.costum.id);
     setState(() {});
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:yorzkha_cos/helper/helper_functions.dart';
 
 class RegisterPage extends StatefulWidget {
   final void Function()? onTap;
-  
+
   const RegisterPage({super.key, required this.onTap});
 
   @override
@@ -45,21 +45,21 @@ class _RegisterPageState extends State<RegisterPage> {
     if (context.mounted) {
       setState(() {
         isButtonPressed = false;
-    });
+      });
 
-    // if password and confirm password match
+      // if password and confirm password match
     } else {
-    // Try to register user
-    try {
-      // create user
-      UserCredential? userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
+      // Try to register user
+      try {
+        // create user
+        UserCredential? userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
 
-      // pop loading circle
-      Navigator.pop(context);
+        // pop loading circle
+        Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         // pop loading circle
         Navigator.pop(context);
@@ -69,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
         if (context.mounted) {
           setState(() {
             isButtonPressed = false;
-        });
+          });
         }
       }
     }
@@ -93,49 +93,57 @@ class _RegisterPageState extends State<RegisterPage> {
                   size: 80,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-      
+
                 const SizedBox(height: 25),
-      
+
                 // App Name
                 const Text(
                   'Y O R Z K H A   C O S R E N T',
                   style: TextStyle(fontSize: 20),
                 ),
-      
+
                 const SizedBox(height: 50),
-      
+
                 // Username TextField
                 MyTextField(
-                    hintText: "Username",
-                    obscureText: false,
-                    controller: usernameController),
-      
+                  hintText: "Username",
+                  obscureText: false,
+                  controller: usernameController,
+                  keyboardType: TextInputType.text,
+                ),
+
                 const SizedBox(height: 10),
-      
+
                 // Email TextField
                 MyTextField(
-                    hintText: "Email",
-                    obscureText: false,
-                    controller: emailController),
-      
+                  hintText: "Email",
+                  obscureText: false,
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress
+                ),
+
                 const SizedBox(height: 10),
-      
+
                 // Password TextField
                 MyTextField(
-                    hintText: "Password",
-                    obscureText: true,
-                    controller: passwordController),
-      
+                  hintText: "Password",
+                  obscureText: true,
+                  controller: passwordController,
+                  keyboardType: TextInputType.text
+                ),
+
                 const SizedBox(height: 10),
-      
+
                 // Confirm Password TextField
                 MyTextField(
-                    hintText: "Confirm Password",
-                    obscureText: true,
-                    controller: confirmPwController),
-      
+                  hintText: "Confirm Password",
+                  obscureText: true,
+                  controller: confirmPwController,
+                  keyboardType: TextInputType.text
+                ),
+
                 const SizedBox(height: 25),
-      
+
                 // register Button
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
@@ -152,9 +160,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     },
                   ),
                 ),
-      
+
                 const SizedBox(height: 25),
-      
+
                 // Already have an account? Login here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

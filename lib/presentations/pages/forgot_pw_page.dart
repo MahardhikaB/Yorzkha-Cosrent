@@ -60,7 +60,8 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
           MyTextField(
             hintText: "Email",
             obscureText: false,
-            controller: emailController
+            controller: emailController,
+            keyboardType: TextInputType.emailAddress,
           ),
           MyButton(
             text: "Reset Now", 

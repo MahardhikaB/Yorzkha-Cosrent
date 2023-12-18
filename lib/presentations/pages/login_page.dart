@@ -95,7 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                 MyTextField(
                   hintText: "Email",
                   obscureText: false,
-                  controller: emailController
+                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
                 ),
       
                 const SizedBox(height: 10),
@@ -104,7 +105,8 @@ class _LoginPageState extends State<LoginPage> {
                 MyTextField(
                   hintText: "Password",
                   obscureText: true,
-                  controller: passwordController
+                  controller: passwordController,
+                  keyboardType: TextInputType.text,
                 ),
       
                 // Forgot Password

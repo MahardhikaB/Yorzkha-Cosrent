@@ -23,8 +23,8 @@ class _HomePageState extends State<HomePage> {
 
   // Navigate to AddCostumPage
   void navigateToAddCostumPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const AddCostumPage()));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const AddCostumPage()));
   }
 
   @override
@@ -109,7 +109,8 @@ class _HomePageState extends State<HomePage> {
                                         children: [
                                           // Edit button
                                           SlidableAction(
-                                            borderRadius: const BorderRadius.only(
+                                            borderRadius:
+                                                const BorderRadius.only(
                                               topLeft: Radius.circular(8),
                                               bottomLeft: Radius.circular(8),
                                             ),
@@ -129,7 +130,8 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           // Delete button
                                           SlidableAction(
-                                            borderRadius: const BorderRadius.only(
+                                            borderRadius:
+                                                const BorderRadius.only(
                                               topRight: Radius.circular(8),
                                               bottomRight: Radius.circular(8),
                                             ),
@@ -139,7 +141,8 @@ class _HomePageState extends State<HomePage> {
                                                 context: context,
                                                 builder: (context) =>
                                                     AlertDialog(
-                                                  title: const Text('Konfirmasi'),
+                                                  title:
+                                                      const Text('Konfirmasi'),
                                                   content: const Text(
                                                       'Apakah Anda yakin ingin menghapus kostum ini?'),
                                                   actions: [
@@ -148,17 +151,21 @@ class _HomePageState extends State<HomePage> {
                                                         Navigator.pop(
                                                             context); // Tutup dialog
                                                       },
-                                                      child: const Text('Batal'),
+                                                      child:
+                                                          const Text('Batal'),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
                                                         // Hapus kostum jika dikonfirmasi
                                                         Costum.deleteCostum(
-                                                            costum.id, costum.imageUrl, context);
+                                                            costum.id,
+                                                            costum.imageUrl,
+                                                            context);
                                                         Navigator.pop(
                                                             context); // Tutup dialog
                                                       },
-                                                      child: const Text('Hapus'),
+                                                      child:
+                                                          const Text('Hapus'),
                                                     ),
                                                   ],
                                                 ),
@@ -204,13 +211,9 @@ class _HomePageState extends State<HomePage> {
                         onTap: () {
                           navigateToAddCostumPage();
                         },
-                        child: FloatingActionButton(
-                          onPressed: null,
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8)),
-                          elevation: 0,
-                          child: const Icon(Icons.add),
+                        child: const SizedBox(
+                          height: 50, 
+                          child: Icon(Icons.add)
                         ),
                       ),
                     ),

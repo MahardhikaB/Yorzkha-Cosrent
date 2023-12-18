@@ -45,51 +45,57 @@ class Costum {
   }
 
   // create function
-  static Future<void> create(TextEditingController namaController, TextEditingController ukuranController, TextEditingController hargaController, String availability, String imageUrl, TextEditingController deskripsi, BuildContext context) async {
-    // show loading circle
-    showDialog(
-      context: context,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
+static Future<void> create(
+  TextEditingController namaController,
+  TextEditingController ukuranController,
+  TextEditingController hargaController,
+  String availability,
+  String imageUrl,
+  TextEditingController deskripsiController,
+  BuildContext context) async {
+  // show loading circle
+  showDialog(
+    context: context,
+    builder: (context) => const Center(
+      child: CircularProgressIndicator(),
+    ),
+  );
+  try {
+    // Konversi harga menjadi integer
+    final int harga = int.tryParse(hargaController.text) ?? 0;
+
+    // Konversi availability menjadi boolean
+    final bool isAvailable = availability == 'Tersedia';
+
+    await FirebaseFirestore.instance.collection('Costum').add({
+      'NamaKostum': namaController.text,
+      'Ukuran': ukuranController.text,
+      'Harga': harga,
+      'isAvailable': isAvailable,
+      'imageUrl': imageUrl,
+      'deskripsi': deskripsiController.text, // Ambil nilai deskripsi dari controller
+    });
+
+    // pop loading circle
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
+
+    // Tampilkan pesan sukses
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Costum added successfully'),
       ),
     );
-    try {
-      // Konversi harga menjadi integer
-      final int harga = int.tryParse(hargaController.text) ?? 0;
 
-      // Konversi availability menjadi boolean
-      final bool isAvailable = availability == 'Tersedia' ? true : false;
-
-      await FirebaseFirestore.instance.collection('Costum').add({
-        'NamaKostum': namaController.text,
-        'Ukuran': ukuranController.text,
-        'Harga': harga,
-        'isAvailable': isAvailable,
-        'imageUrl': imageUrl,
-        'deskripsi': deskripsi,
-      });
-
-      // pop loading circle
-      if (context.mounted) {
-        Navigator.pop(context);
-      }
-
-      // Tampilkan pesan sukses
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Costum added successfully'),
-        ),
-      );
-
-      // Kembali ke halaman sebelumnya
-      Navigator.pop(context);
-
-
-    } catch (e) {
-      // Handle error saat gagal menambahkan data ke Firebase
-      print('Error creating costum: $e');
-    }
+    // Kembali ke halaman sebelumnya
+    Navigator.pop(context);
+  } catch (e) {
+    // Handle error saat gagal menambahkan data ke Firebase
+    print('Error creating costum: $e');
   }
+}
+
 
   // update function
   static Future<void> update(String documentId, String namaKostum, String ukuran, int harga, bool isAvailable, String imageUrl, String deskripsi, BuildContext context) async {

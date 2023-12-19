@@ -22,7 +22,6 @@ class RentedPage extends StatefulWidget {
 class _RentedPageState extends State<RentedPage> {
   Rent? rent;
 
-  
   @override
   void initState() {
     // TODO: implement initState
@@ -35,10 +34,10 @@ class _RentedPageState extends State<RentedPage> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    final currencyFormatter =
+        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -67,7 +66,8 @@ class _RentedPageState extends State<RentedPage> {
             const SizedBox(height: 16),
             Text('Ukuran: ${widget.costum.ukuran}'),
             const SizedBox(height: 16),
-            Text('Harga: ${currencyFormatter.format(widget.costum.harga)} / 3 Days'),
+            Text(
+                'Harga: ${currencyFormatter.format(widget.costum.harga)} / 3 Days'),
             const SizedBox(height: 16),
             Text(
                 'Status: ${widget.costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
@@ -130,8 +130,15 @@ class _RentedPageState extends State<RentedPage> {
                       onTap: () async {
                         // snckbar
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Costum has been returned'),
+                          SnackBar(
+                              content: const Text('Kostum telah dikembalikan',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
                           ),
                         );
                         // find costum by costumId then update isAvailable
@@ -145,18 +152,18 @@ class _RentedPageState extends State<RentedPage> {
                         Navigator.pop(context);
                       },
                       child: const SizedBox(
-                          height: 50, 
-                          child: Center(
-                            child: Text(
-                              'R E T U R N',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            'R E T U R N',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
                             ),
                           ),
                         ),
+                      ),
                     ),
                   ),
                 ),

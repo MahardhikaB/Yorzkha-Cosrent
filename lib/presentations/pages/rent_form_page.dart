@@ -33,11 +33,11 @@ class _RentFormPageState extends State<RentFormPage> {
           'Tekan ikon kamera untuk memindai KTP\n Agar mempermudah proses pengisian form',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           )
         ),
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 4),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -133,7 +133,7 @@ class _RentFormPageState extends State<RentFormPage> {
                         keyboardType: TextInputType.text,
                         readOnly: true,
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 8),
                     ],
                   ),
                 ),

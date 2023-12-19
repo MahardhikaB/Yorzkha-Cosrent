@@ -141,32 +141,36 @@ class _HomePageState extends State<HomePage> {
                                               showDialog(
                                                 context: context,
                                                 builder: (context) =>
-                                                    AlertDialog(
-                                                  title:
-                                                      const Text('Konfirmasi'),
-                                                  content: const Text(
-                                                      'Apakah Anda yakin ingin menghapus kostum ini?'),
+                                                AlertDialog(
+                                                  backgroundColor: Theme.of(context).colorScheme.secondary,
+                                                  title: const Text('Konfirmasi'),
+                                                  content: const Text('Apakah Anda yakin ingin menghapus kostum ini?'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () {
-                                                        Navigator.pop(
-                                                            context); // Tutup dialog
-                                                      },
-                                                      child:
-                                                          const Text('Batal'),
+                                                        Navigator.pop(context); // Tutup dialog
+                                                    },
+                                                    child: const Text(
+                                                      'Batal',
+                                                      style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold,
+                                                      ),
+                                                      ),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
                                                         // Hapus kostum jika dikonfirmasi
-                                                        Costum.deleteCostum(
-                                                            costum.id,
-                                                            costum.imageUrl,
-                                                            context);
-                                                        Navigator.pop(
-                                                            context); // Tutup dialog
+                                                        Costum.deleteCostum(costum.id, costum.imageUrl,context);
+                                                        Navigator.pop(context); // Tutup dialog
                                                       },
-                                                      child:
-                                                          const Text('Hapus'),
+                                                      child:const Text(
+                                                        'Hapus',
+                                                        style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontWeight: FontWeight.bold,
+                                                        ),
+                                                        ),
                                                     ),
                                                   ],
                                                 ),

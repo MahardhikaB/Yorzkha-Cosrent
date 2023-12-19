@@ -42,13 +42,7 @@ class _LoginPageState extends State<LoginPage> {
       if (context.mounted) {
         Navigator.pop(context);
       }
-      // set button to not pressed
-      if (context.mounted) {
-        setState(() {
-          isButtonPressed = false;
-        });
-      }
-    // display error message
+      // display error message
     } on FirebaseAuthException catch (e) {
       // pop loading circle
       Navigator.pop(context);
@@ -80,17 +74,17 @@ class _LoginPageState extends State<LoginPage> {
                   size: 80,
                   color: Theme.of(context).colorScheme.inversePrimary,
                 ),
-      
+
                 const SizedBox(height: 25),
-      
+
                 // App Name
                 const Text(
                   'Y O R Z K H A   C O S R E N T',
                   style: TextStyle(fontSize: 20),
                 ),
-      
+
                 const SizedBox(height: 50),
-      
+
                 // Email TextField
                 MyTextField(
                   hintText: "Email",
@@ -98,9 +92,9 @@ class _LoginPageState extends State<LoginPage> {
                   controller: emailController,
                   keyboardType: TextInputType.emailAddress,
                 ),
-      
+
                 const SizedBox(height: 10),
-      
+
                 // Password TextField
                 MyTextField(
                   hintText: "Password",
@@ -108,20 +102,17 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController,
                   keyboardType: TextInputType.text,
                 ),
-      
+
                 // Forgot Password
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(context, 
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const ForgotPwPage();
-                            }
-                          )
-                        );
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const ForgotPwPage();
+                        }));
                       },
                       child: Text(
                         "Forgot Password?",
@@ -132,28 +123,41 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-      
+
                 const SizedBox(height: 25),
-      
-                // Sign In Button
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  padding: EdgeInsets.all(isButtonPressed ? 16.0 : 8.0),
-                  child: MyButton(
-                    text: "Login",
-                    onTap: () {
-                      // set button to pressed
-                      setState(() {
-                        isButtonPressed = true;
-                      });
-                      // perform login
-                      login();
-                    },
+
+                SizedBox(
+                  height: 60,
+                  width: double.infinity,
+                  child: Material(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      splashFactory: InkRipple.splashFactory,
+                      splashColor: Theme.of(context).colorScheme.inversePrimary,
+                      onTap: () {
+                        login();
+                      },
+                      child: const SizedBox(
+                        height: 50, 
+                        child: Center(
+                          child: Text(
+                            'L O G I N',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          )
+                        )
+                      ),
+                    ),
                   ),
                 ),
-      
+
                 const SizedBox(height: 25),
-      
+
                 // dont have an account? Register here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

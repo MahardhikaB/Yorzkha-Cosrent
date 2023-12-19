@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:yorzkha_cos/components/text_form_field.dart';
 import 'package:yorzkha_cos/components/textfield.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
+import 'package:yorzkha_cos/logic/ktp.dart';
 import 'package:yorzkha_cos/logic/rent.dart';
+import 'package:yorzkha_cos/presentations/pages/scan_page.dart';
 
 class RentFormPage extends StatefulWidget {
   final Costum costum;
@@ -30,13 +32,12 @@ class _RentFormPageState extends State<RentFormPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final snackBar = SnackBar(
         content: const Text(
-          'Tekan ikon kamera untuk memindai KTP\n Agar mempermudah proses pengisian form',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-          )
-        ),
+            'Tekan ikon kamera untuk memindai KTP\n Agar mempermudah proses pengisian form',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            )),
         duration: const Duration(seconds: 4),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       );
@@ -158,7 +159,8 @@ class _RentFormPageState extends State<RentFormPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(8),
                           splashFactory: InkRipple.splashFactory,
-                          splashColor: Theme.of(context).colorScheme.inversePrimary,
+                          splashColor:
+                              Theme.of(context).colorScheme.inversePrimary,
                           onTap: () async {
                             await Rent.create(
                               nikController.text,
@@ -172,7 +174,7 @@ class _RentFormPageState extends State<RentFormPage> {
                             Navigator.pop(context);
                           },
                           child: const SizedBox(
-                            height: 50, 
+                            height: 50,
                             child: Center(
                               child: Text(
                                 'R E N T',
@@ -206,10 +208,31 @@ class _RentFormPageState extends State<RentFormPage> {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(8),
                           splashFactory: InkRipple.splashFactory,
-                          splashColor: Theme.of(context).colorScheme.inversePrimary,
-                          onTap: () {},
+                          splashColor:
+                              Theme.of(context).colorScheme.inversePrimary,
+                          onTap: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScanPage(),
+                              ),
+                            );
+
+                            // Lakukan pengecekan sebelum menggunakan hasilnya
+                            if (result != null && result is KTP) {
+                              // Data yang diterima adalah instance dari KTP, lakukan sesuatu dengan data tersebut
+                              nikController.text = result.nik;
+                              namaController.text = result.nama;
+                              alamatController.text = result.alamat;
+                              jenisKelaminController.text = result.jenisKelamin;
+                            } else {
+                              // Data yang diterima tidak sesuai dengan yang diharapkan
+                              print(
+                                  'Hasil dari ScanPage tidak valid atau tidak ada.');
+                            }
+                          },
                           child: const SizedBox(
-                            height: 50, 
+                            height: 50,
                             child: Center(
                               child: Icon(
                                 Icons.camera_alt,

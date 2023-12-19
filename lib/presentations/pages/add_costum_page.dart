@@ -51,7 +51,6 @@ class _AddCostumPageState extends State<AddCostumPage> {
 
       return url;
 
-      // TODO: Simpan URL ke Firestore atau lakukan tindakan lain sesuai kebutuhan
     } catch (e) {
       print('Error uploading image: $e');
       return '';
@@ -79,12 +78,16 @@ class _AddCostumPageState extends State<AddCostumPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            Container(
+              padding: const EdgeInsets.all(16),
                 width: 150,
                 height: 150,
                 child: (imageFile != null)
                     ? Image.file(File(imageFile!.path))
-                    : const SizedBox()),
+                    : const Center(
+                        child: Text('No Image Selected'),
+                    ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -94,7 +97,7 @@ class _AddCostumPageState extends State<AddCostumPage> {
                   dashPattern: const [16, 4],
                   radius: const Radius.circular(8),
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Material(
                       borderRadius: BorderRadius.circular(8),
                       color: Theme.of(context).colorScheme.secondary,
@@ -107,7 +110,7 @@ class _AddCostumPageState extends State<AddCostumPage> {
                         },
                         child: const SizedBox(
                           height: 40,
-                          width: 138,
+                          width: 130,
                           child: Center(
                             child: Text('Pick Image')
                           )
@@ -123,7 +126,7 @@ class _AddCostumPageState extends State<AddCostumPage> {
                   dashPattern: const [16, 4],
                   radius: const Radius.circular(8),
                   child: Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Material(
                       borderRadius: BorderRadius.circular(8),
                       color: Theme.of(context).colorScheme.secondary,
@@ -134,11 +137,11 @@ class _AddCostumPageState extends State<AddCostumPage> {
                         onTap: () {
                           pickImage(ImageSource.camera);
                         },
-                        child: SizedBox(
+                        child: const SizedBox(
                           height: 40,
-                          width: 138,
+                          width: 130,
                           child: Center(
-                            child: const Text('Take Image')
+                            child: Text('Take Image')
                           )
                         ),
                       ),
@@ -149,7 +152,7 @@ class _AddCostumPageState extends State<AddCostumPage> {
             ),
             Container(
               width: double.infinity,
-              margin: const EdgeInsets.only(left: 16, right: 16, top: 16),
+              margin: const EdgeInsets.only(left: 24, right: 24, top: 16),
               child: DottedBorder(
                 strokeWidth: 1,
                 borderType: BorderType.RRect,
@@ -204,8 +207,7 @@ class _AddCostumPageState extends State<AddCostumPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(
-                  left: 16, right: 16, bottom: 8, top: 16),
+              margin: const EdgeInsets.only(left: 24, right: 24, bottom: 16, top: 16),
               child: DottedBorder(
                 borderType: BorderType.RRect,
                 color: Theme.of(context).colorScheme.inversePrimary,
@@ -222,6 +224,28 @@ class _AddCostumPageState extends State<AddCostumPage> {
                       splashFactory: InkRipple.splashFactory,
                       splashColor: Theme.of(context).colorScheme.inversePrimary,
                       onTap: () async {
+                        // jika tidak ada form dan gambar yang kosong
+                        if (imageFile == null ||
+                            namaController.text.isEmpty ||
+                            ukuranController.text.isEmpty ||
+                            hargaController.text.isEmpty ||
+                            deskripsiController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: const Center(
+                                child: Text(
+                                  'Form & Gambar tidak boleh kosong',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                            ),
+                          );
+                          return;
+                        }
                         String url = await uploadImage();
                         await Costum.create(
                           namaController,

@@ -16,7 +16,8 @@ class DeskripsiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    final currencyFormatter =
+        NumberFormat.currency(locale: 'id', symbol: 'Rp.', decimalDigits: 0);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,21 +39,50 @@ class DeskripsiPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
-              costum.namaKostum,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            // Gambar dan Nama
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  // Gambar
+                  Image.network(costum.imageUrl, width: 100, height: 150),
+                  const SizedBox(width: 16),
+                  Container(
+                    height: 150,
+                    width: 1,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                  const SizedBox(width: 16),
+                  // Nama dan Teks
+                  Center(
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            costum.namaKostum,
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Text('Ukuran: ${costum.ukuran}'),
+                          const SizedBox(height: 8),
+                          Text(
+                              'Harga: ${currencyFormatter.format(costum.harga)} / 3 Days'),
+                          const SizedBox(height: 8),
+                          Text(
+                              'Status: ${costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-            Text('Ukuran: ${costum.ukuran}'),
-            const SizedBox(height: 16),
-            Text('Harga: ${currencyFormatter.format(costum.harga)} / 3 Days'),
-            const SizedBox(height: 16),
-            Text('Status: ${costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
-
             // Dotted Border
             Flexible(
               child: Container(
-                margin: const EdgeInsets.only(right: 8, left: 8, top: 32),
+                margin: const EdgeInsets.only(right: 8, left: 8, top: 16),
                 child: SizedBox(
                   height: 800,
                   width: double.infinity,
@@ -74,6 +104,7 @@ class DeskripsiPage extends StatelessWidget {
                 ),
               ),
             ),
+
             // Second Dotted Border
             Container(
               width: double.infinity,
@@ -92,27 +123,29 @@ class DeskripsiPage extends StatelessWidget {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(8),
                       splashFactory: InkRipple.splashFactory,
-                      splashColor: Theme.of(context).colorScheme.inversePrimary,
+                      splashColor:
+                          Theme.of(context).colorScheme.inversePrimary,
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => RentFormPage(costum: costum),
+                            builder: (context) =>
+                                RentFormPage(costum: costum),
                           ),
                         );
                       },
                       child: const SizedBox(
-                          height: 50, 
-                          child: Center(
-                            child: Text(
-                              'R E N T',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                              ),
+                        height: 50,
+                        child: Center(
+                          child: Text(
+                            'R E N T',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
                             ),
                           ),
+                        ),
                       ),
                     ),
                   ),

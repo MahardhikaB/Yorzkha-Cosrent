@@ -34,25 +34,15 @@ class MyDropdown extends StatelessWidget {
           items: items.map((String option) {
             return DropdownMenuItem<String>(
               value: option,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                // Atur warna latar belakang sesuai keinginan
-                // color: Colors.white,
-                // // Atur border sesuai keinginan
-                // border: Border.all(color: Colors.grey, width: 1),
-                ),
-                child: Text(
-                  option,
-                  style: TextStyle(
-                    color: Colors.grey.shade700,
-                  ),
+              child: Text(
+                option,
+                style: TextStyle(
+                  color: Colors.grey.shade700,
                 ),
               ),
             );
           }).toList(),
           isExpanded: true,
-          underline: const SizedBox(),
           icon: const Icon(Icons.arrow_drop_down),
           iconSize: 36,
         ),

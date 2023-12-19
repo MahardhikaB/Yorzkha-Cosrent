@@ -15,7 +15,7 @@ class MyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currencyFormatter = NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+    final currencyFormatter = NumberFormat.currency(locale: 'id', symbol: 'Rp.', decimalDigits: 0);
     return Container(
       width: double.infinity,
       height: 120,

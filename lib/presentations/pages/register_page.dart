@@ -145,19 +145,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 25),
 
                 // register Button
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  padding: EdgeInsets.all(isButtonPressed ? 16.0 : 8.0),
-                  child: MyButton(
-                    text: "Register",
-                    onTap: () {
-                      // set button to pressed
-                      setState(() {
-                        isButtonPressed = true;
-                      });
-                      // perform register
-                      registerUser();
-                    },
+                SizedBox(
+                  height: 60,
+                  width: double.infinity,
+                  child: Material(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Theme.of(context).colorScheme.secondary,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(8),
+                      splashFactory: InkRipple.splashFactory,
+                      splashColor: Theme.of(context).colorScheme.inversePrimary,
+                      onTap: () {
+                        registerUser();
+                      },
+                      child: const SizedBox(
+                        height: 50, 
+                        child: Center(
+                          child: Text(
+                            'R E G I S T E R',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          )
+                        )
+                      ),
+                    ),
                   ),
                 ),
 

@@ -66,6 +66,7 @@ class _RentFormPageState extends State<RentFormPage> {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
               'RENT FORM',
@@ -97,6 +98,7 @@ class _RentFormPageState extends State<RentFormPage> {
                           }
                           return null;
                         },
+                        keyboardType: TextInputType.number,
                       ),
                       const SizedBox(height: 16),
                       MyTextField(
@@ -162,6 +164,27 @@ class _RentFormPageState extends State<RentFormPage> {
                           splashColor:
                               Theme.of(context).colorScheme.inversePrimary,
                           onTap: () async {
+                            // jika form kosong maka tampilkan snackbar
+                            if (nikController.text.isEmpty ||
+                                namaController.text.isEmpty ||
+                                alamatController.text.isEmpty ||
+                                jenisKelaminController.text.isEmpty ||
+                                noHpController.text.isEmpty) {
+                              final snackBar = SnackBar(
+                                content: const Text(
+                                    'Harap isi semua form terlebih dahulu',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.inversePrimary,
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                              return;
+                            }
                             await Rent.create(
                               nikController.text,
                               namaController.text,

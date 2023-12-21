@@ -79,15 +79,25 @@ class _AddCostumPageState extends State<AddCostumPage> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(16),
-                width: 150,
-                height: 150,
-                child: (imageFile != null)
-                    ? Image.file(File(imageFile!.path))
-                    : const Center(
-                        child: Text('No Image Selected'),
-                    ),
+              padding: const EdgeInsets.only(top: 16),
+              child: DottedBorder(
+                borderType: BorderType.RRect,
+                color: Theme.of(context).colorScheme.inversePrimary,
+                dashPattern: const [16, 4],
+                radius: const Radius.circular(8),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                    width: 310,
+                    height: 180,
+                    child: (imageFile != null)
+                        ? Image.file(File(imageFile!.path))
+                        : const Center(
+                            child: Text('Preview Image'),
+                        ),
+                ),
+              ),
             ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

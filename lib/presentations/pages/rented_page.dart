@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:yorzkha_cos/components/textfield.dart';
 import 'package:yorzkha_cos/logic/costum.dart';
 import 'package:yorzkha_cos/logic/rent.dart';
 
@@ -37,7 +38,7 @@ class _RentedPageState extends State<RentedPage> {
   @override
   Widget build(BuildContext context) {
     final currencyFormatter =
-        NumberFormat.currency(locale: 'id_ID', symbol: 'Rp');
+        NumberFormat.currency(locale: 'id', symbol: 'Rp.', decimalDigits: 0);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -59,19 +60,45 @@ class _RentedPageState extends State<RentedPage> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
-              widget.costum.namaKostum,
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  // Gambar
+                  Image.network(widget.costum.imageUrl, width: 100, height: 150),
+                  const SizedBox(width: 16),
+                  Container(
+                    height: 150,
+                    width: 1,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
+                  const SizedBox(width: 16),
+                  // Nama dan Teks
+                  Center(
+                    child: Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.costum.namaKostum,
+                            style: const TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          Text('Ukuran: ${widget.costum.ukuran}'),
+                          const SizedBox(height: 8),
+                          Text(
+                              'Harga: ${currencyFormatter.format(widget.costum.harga)} / 3 Days'),
+                          const SizedBox(height: 8),
+                          Text(
+                              'Status: ${widget.costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 16),
-            Text('Ukuran: ${widget.costum.ukuran}'),
-            const SizedBox(height: 16),
-            Text(
-                'Harga: ${currencyFormatter.format(widget.costum.harga)} / 3 Days'),
-            const SizedBox(height: 16),
-            Text(
-                'Status: ${widget.costum.isAvailable ? 'Tersedia' : 'Digunakan'}'),
-
             // Dotted Border
             Flexible(
               child: Container(
@@ -85,24 +112,80 @@ class _RentedPageState extends State<RentedPage> {
                     dashPattern: const [18, 4],
                     color: Theme.of(context).colorScheme.inversePrimary,
                     radius: const Radius.circular(8),
-                    child: Column(
-                      children: [
-                        Text(
-                          'NIK: ${rent?.nik}',
-                        ),
-                        Text(
-                          'Namaa Peminjam: ${rent?.nama}',
-                        ),
-                        Text(
-                          'Alamat: ${rent?.alamat}',
-                        ),
-                        Text(
-                          'Jenis Kelamin: ${rent?.jenisKelamin}',
-                        ),
-                        Text(
-                          'No Telp: ${rent?.noTelp}',
-                        ),
-                      ],
+                    child: Center(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 8),
+                          Text(
+                            'D A T A   P E M I N J A M',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.inversePrimary,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16, top: 4, bottom: 4),
+                            child: MyTextField(
+                              hintText: '',
+                              obscureText: false,
+                              controller: TextEditingController(
+                                text: 'NIK : ${rent?.nik}',
+                              ),
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16, top: 4, bottom: 4),
+                            child: MyTextField(
+                              hintText: '',
+                              obscureText: false,
+                              controller: TextEditingController(
+                                text: 'Nama : ${rent?.nama}',
+                              ),
+                              keyboardType: TextInputType.text,
+                              readOnly: true,
+                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16, top: 4, bottom: 4),
+                            child: MyTextField(
+                              hintText: '',
+                              obscureText: false,
+                              controller: TextEditingController(
+                                text: 'Alamat : ${rent?.alamat}',
+                              ),
+                              keyboardType: TextInputType.text,
+                              readOnly: true,
+                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16, top: 4, bottom: 4),
+                            child: MyTextField(
+                              hintText: '',
+                              obscureText: false,
+                              controller: TextEditingController(
+                                text: 'Jenis Kelamin : ${rent?.jenisKelamin}',
+                              ),
+                              keyboardType: TextInputType.text,
+                              readOnly: true,
+                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16, left: 16, top: 4, bottom: 4),
+                            child: MyTextField(
+                              hintText: '',
+                              obscureText: false,
+                              controller: TextEditingController(
+                                text: 'No. HP : ${rent?.noTelp}',
+                              ),
+                              keyboardType: TextInputType.number,
+                              readOnly: true,
+                              ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

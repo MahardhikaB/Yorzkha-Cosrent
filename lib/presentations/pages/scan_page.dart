@@ -21,7 +21,8 @@ class _ScanPageState extends State<ScanPage> {
 
   final dio = Dio(
     BaseOptions(
-      baseUrl: 'http://192.168.18.21:5000',
+      // Harus Sama dengan IP Address yang ada di server python dan Hp harus ada di satu jaringan (wifi) yang sama dengan server python
+      baseUrl: 'http://192.168.66.6:5000',
     ),
   );
 
@@ -72,136 +73,138 @@ class _ScanPageState extends State<ScanPage> {
         elevation: 0,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            DottedBorder(
-              borderType: BorderType.RRect,
-              color: Theme.of(context).colorScheme.inversePrimary,
-              dashPattern: const [16, 4],
-              radius: const Radius.circular(8),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                child: SizedBox(
-                  height: 300,
-                  width: 300,
-                  child: (imageFile == null)
-                      ? const Center(
-                          child: Text('Preview Image'),
-                        )
-                      : (imageFile != null)
-                          ? Image.file(
-                              File(imageFile!.path),
-                              width: 300,
-                              height: 300,
-                            )
-                          : const SizedBox.shrink(),
-                ),
-              ),
-            ),
-            const SizedBox(height: 32),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                DottedBorder(
-                  borderType: BorderType.RRect,
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  dashPattern: const [16, 4],
-                  radius: const Radius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).colorScheme.secondary,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        splashFactory: InkRipple.splashFactory,
-                        splashColor:
-                            Theme.of(context).colorScheme.inversePrimary,
-                        onTap: () {
-                          pickImage(ImageSource.gallery);
-                        },
-                        child: const SizedBox(
-                            height: 40,
-                            width: 130,
-                            child: Center(child: Text('Pick Image'))),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 44),
-                DottedBorder(
-                  borderType: BorderType.RRect,
-                  color: Theme.of(context).colorScheme.inversePrimary,
-                  dashPattern: const [16, 4],
-                  radius: const Radius.circular(8),
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Theme.of(context).colorScheme.secondary,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(8),
-                        splashFactory: InkRipple.splashFactory,
-                        splashColor:
-                            Theme.of(context).colorScheme.inversePrimary,
-                        onTap: () {
-                          pickImage(ImageSource.camera);
-                        },
-                        child: const SizedBox(
-                            height: 40,
-                            width: 130,
-                            child: Center(child: Text('Take Image'))),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: DottedBorder(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DottedBorder(
                 borderType: BorderType.RRect,
                 color: Theme.of(context).colorScheme.inversePrimary,
                 dashPattern: const [16, 4],
                 radius: const Radius.circular(8),
                 child: Container(
-                  padding: const EdgeInsets.all(4),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Theme.of(context).colorScheme.secondary,
-                    child: InkWell(
+                  padding: const EdgeInsets.all(12),
+                  child: SizedBox(
+                    height: 300,
+                    width: 300,
+                    child: (imageFile == null)
+                        ? const Center(
+                            child: Text('Preview Image'),
+                          )
+                        : (imageFile != null)
+                            ? Image.file(
+                                File(imageFile!.path),
+                                width: 300,
+                                height: 300,
+                              )
+                            : const SizedBox.shrink(),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    dashPattern: const [16, 4],
+                    radius: const Radius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Theme.of(context).colorScheme.secondary,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          splashFactory: InkRipple.splashFactory,
+                          splashColor:
+                              Theme.of(context).colorScheme.inversePrimary,
+                          onTap: () {
+                            pickImage(ImageSource.gallery);
+                          },
+                          child: const SizedBox(
+                              height: 40,
+                              width: 130,
+                              child: Center(child: Text('Pick Image'))),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 44),
+                  DottedBorder(
+                    borderType: BorderType.RRect,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    dashPattern: const [16, 4],
+                    radius: const Radius.circular(8),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Material(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Theme.of(context).colorScheme.secondary,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(8),
+                          splashFactory: InkRipple.splashFactory,
+                          splashColor:
+                              Theme.of(context).colorScheme.inversePrimary,
+                          onTap: () {
+                            pickImage(ImageSource.camera);
+                          },
+                          child: const SizedBox(
+                              height: 40,
+                              width: 130,
+                              child: Center(child: Text('Take Image'))),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: DottedBorder(
+                  borderType: BorderType.RRect,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                  dashPattern: const [16, 4],
+                  radius: const Radius.circular(8),
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    child: Material(
                       borderRadius: BorderRadius.circular(8),
-                      splashFactory: InkRipple.splashFactory,
-                      splashColor: Theme.of(context).colorScheme.inversePrimary,
-                      onTap: () {
-                        // if there is no image, do nothing and go back
-                        if (imageFile == null) {
-                          return;
-                        }
-                        sendImage(dio);
-                      },
-                      child: const SizedBox(
-                          height: 40,
-                          width: double.infinity,
-                          child: Center(
-                            child: Text('Send Image'),
-                          )),
+                      color: Theme.of(context).colorScheme.secondary,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        splashFactory: InkRipple.splashFactory,
+                        splashColor: Theme.of(context).colorScheme.inversePrimary,
+                        onTap: () {
+                          // if there is no image, do nothing and go back
+                          if (imageFile == null) {
+                            return;
+                          }
+                          sendImage(dio);
+                        },
+                        child: const SizedBox(
+                            height: 40,
+                            width: double.infinity,
+                            child: Center(
+                              child: Text('Send Image'),
+                            )),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            (isLoading)
-                ? Container(
-                    color: Colors.black.withOpacity(0.5),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-          ],
+              (isLoading)
+                  ? Container(
+                      color: Colors.black.withOpacity(0.5),
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
         ),
       ),
     );

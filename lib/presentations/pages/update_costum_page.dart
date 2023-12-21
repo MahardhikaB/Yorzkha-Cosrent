@@ -104,13 +104,34 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(16),
-              width: 150,
-              height: 150,
-              child: (imageFile != null)
-                  ? Image.file(File(imageFile!.path))
-                  : Image.network(widget.costum.imageUrl),
+              padding: const EdgeInsets.only(top: 16),
+              child: DottedBorder(
+                borderType: BorderType.RRect,
+                color: Theme.of(context).colorScheme.inversePrimary,
+                dashPattern: const [16, 4],
+                radius: const Radius.circular(8),
+                child: Container(
+                    padding: const EdgeInsets.all(16),
+                    width: 310,
+                    height: 180,
+                    child: (imageFile != null)
+                        ? Image.file(
+                            File(imageFile!.path),
+                            width: 300,
+                            height: 300,
+                          )
+                        : (imageFile == null)
+                            ? Image.network(
+                                widget.costum.imageUrl,
+                                width: 300,
+                                height: 300,
+                              )
+                            : const Center(
+                                child: Text('Preview Image'),
+                              )),
+              ),
             ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -135,9 +156,7 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
                         child: const SizedBox(
                             height: 40,
                             width: 130,
-                            child: Center(child: Text('Pick Image')
-                          )
-                        ),
+                            child: Center(child: Text('Pick Image'))),
                       ),
                     ),
                   ),
@@ -156,17 +175,15 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(8),
                         splashFactory: InkRipple.splashFactory,
-                        splashColor: Theme.of(context).colorScheme.inversePrimary,
+                        splashColor:
+                            Theme.of(context).colorScheme.inversePrimary,
                         onTap: () {
                           pickImage(ImageSource.camera);
                         },
                         child: const SizedBox(
-                          height: 40,
-                          width: 130,
-                          child: Center(
-                            child: Text('Take Image')
-                          )
-                        ),
+                            height: 40,
+                            width: 130,
+                            child: Center(child: Text('Take Image'))),
                       ),
                     ),
                   ),
@@ -230,7 +247,8 @@ class _UpdateCostumPageState extends State<UpdateCostumPage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(left: 24, right: 24, bottom: 16, top: 16),
+              margin: const EdgeInsets.only(
+                  left: 24, right: 24, bottom: 16, top: 16),
               child: DottedBorder(
                 borderType: BorderType.RRect,
                 color: Theme.of(context).colorScheme.inversePrimary,

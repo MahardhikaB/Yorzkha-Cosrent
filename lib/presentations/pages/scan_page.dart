@@ -22,7 +22,7 @@ class _ScanPageState extends State<ScanPage> {
   final dio = Dio(
     BaseOptions(
       // Harus Sama dengan IP Address yang ada di server python dan Hp harus ada di satu jaringan (wifi) yang sama dengan server python
-      baseUrl: 'http://192.168.66.6:5000',
+      baseUrl: 'http://192.168.58.33:5000',
     ),
   );
 

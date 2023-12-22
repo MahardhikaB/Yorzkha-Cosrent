@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:yorzkha_cos/components/button.dart';
 import 'package:yorzkha_cos/components/textfield.dart';
 import 'package:yorzkha_cos/helper/helper_functions.dart';
 import 'package:yorzkha_cos/presentations/pages/forgot_pw_page.dart';
@@ -18,9 +17,6 @@ class _LoginPageState extends State<LoginPage> {
   // Text Controllers
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  // Pressed Button
-  bool isButtonPressed = false;
 
   // Login Function
   void login() async {
@@ -47,12 +43,6 @@ class _LoginPageState extends State<LoginPage> {
       // pop loading circle
       Navigator.pop(context);
       displayErrorMessage(e.code, context);
-      // set button to not pressed
-      if (context.mounted) {
-        setState(() {
-          isButtonPressed = false;
-        });
-      }
     }
   }
 
